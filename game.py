@@ -1,4 +1,5 @@
 import pygame
+from gameObject import GameObject
 
 
 class Game:
@@ -8,17 +9,15 @@ class Game:
         self.SCREEN_HEIGHT = 800
         self.GAME_WINDOW_BACKGROUND_COLOR = (255, 255, 255)
         self.CLOCK_TICK = 60
-        BACKGROUND_IMAGE = pygame.image.load('assets/background.png')
-        self.BACKGROUND_IMAGE_SCALED = pygame.transform.scale(BACKGROUND_IMAGE, (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        TREASURE_IMAGE = pygame.image.load('assets/treasure.png')
-        self.TREASURE_IMAGE_SCALED = pygame.transform.scale(TREASURE_IMAGE, (50, 50))
+        self.background = GameObject(0, 0, 800, 800, 'assets/background.png')
+        self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
 
     def draw_objects(self):
         self.game_window.fill(self.GAME_WINDOW_BACKGROUND_COLOR)
-        self.game_window.blit(self.BACKGROUND_IMAGE_SCALED, (0, 0))
-        self.game_window.blit(self.TREASURE_IMAGE_SCALED, (375, 50))
+        self.game_window.blit(self.background.image, (self.background.x, self.background.y))
+        self.game_window.blit(self.treasure.image, (self.treasure.x, self.treasure.y))
         pygame.display.update()
 
     def run_game_loop(self):
