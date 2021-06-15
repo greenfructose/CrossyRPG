@@ -26,6 +26,18 @@ class Game:
         self.game_window.blit(self.enemy.image, (self.enemy.x, self.enemy.y))
         pygame.display.update()
 
+    def detect_collision(self, object_1, object_2):
+        if object_1.y > (object_2.y + object_2.height):
+            return False
+        elif (object_1.y + object_1.height) < object_2.y:
+            return False
+
+        if object_1.x > (object_2.x + object_2.width):
+            return False
+        elif (object_1.x + object_1.width) < object_2.x:
+            return False
+        return True
+
     def run_game_loop(self):
         player_direction = 0
         while True:
@@ -44,4 +56,8 @@ class Game:
             self.player.move(player_direction, self.SCREEN_HEIGHT)
             self.enemy.move(self.SCREEN_WIDTH)
             self.draw_objects()
+            if self.detect_collision(self.player, self.enemy):
+                return
+            elif self.detect_collision(self.player, self.treasure):
+                return
             self.clock.tick(self.CLOCK_TICK)
