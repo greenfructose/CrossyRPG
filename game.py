@@ -13,7 +13,7 @@ class Game:
         self.GAME_WINDOW_BACKGROUND_COLOR = (255, 255, 255)
         self.CLOCK_TICK = 60
         self.background = GameObject(0, 0, 800, 800, 'assets/background.png')
-        self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
+        self.intrastellar_conduit = GameObject(350, 50, 100, 100, 'assets/intrastellar_conduit.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
 
@@ -43,7 +43,7 @@ class Game:
     def draw_objects(self):
         self.game_window.fill(self.GAME_WINDOW_BACKGROUND_COLOR)
         self.game_window.blit(self.background.image, (self.background.x, self.background.y))
-        self.game_window.blit(self.treasure.image, (self.treasure.x, self.treasure.y))
+        self.game_window.blit(self.intrastellar_conduit.image, (self.intrastellar_conduit.x, self.intrastellar_conduit.y))
         self.game_window.blit(self.player.image, (self.player.x, self.player.y))
         for enemy in self.enemies:
             self.game_window.blit(enemy.image, (enemy.x, enemy.y))
@@ -73,7 +73,7 @@ class Game:
                 pygame.mixer.Sound.play(ouch)
                 self.level = 1.0
                 return True
-        if self.detect_collision(self.player, self.treasure):
+        if self.detect_collision(self.player, self.intrastellar_conduit):
             nice = pygame.mixer.Sound(os.path.join('sound', 'Jump__001.ogg'))
             pygame.mixer.Sound.play(nice)
             self.level += 0.5
