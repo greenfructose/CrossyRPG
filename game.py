@@ -24,10 +24,20 @@ class Game:
         pygame.display.update()
 
     def run_game_loop(self):
+        player_direction = 0
         while True:
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
                     return
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        player_direction = -1
+                    elif event.key == pygame.K_DOWN:
+                        player_direction = 1
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                        player_direction = 0
+            self.player.move(player_direction)
             self.draw_objects()
             self.clock.tick(self.CLOCK_TICK)
