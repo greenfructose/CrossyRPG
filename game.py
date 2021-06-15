@@ -12,7 +12,7 @@ class Game:
         self.SCREEN_HEIGHT = 800
         self.GAME_WINDOW_BACKGROUND_COLOR = (255, 255, 255)
         self.CLOCK_TICK = 60
-        self.background = GameObject(0, 0, 800, 800, 'assets/background.png')
+        self.background = GameObject(0, 0, 800, 800, 'assets/earth.png')
         self.intrastellar_conduit = GameObject(350, 50, 100, 100, 'assets/intrastellar_conduit.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
