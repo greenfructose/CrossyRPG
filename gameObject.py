@@ -14,3 +14,9 @@ class GameObject:
             self.image = pygame.transform.flip(self.image, True, False)
         else:
             self.image = pygame.transform.scale(image, (width, height))
+        image = pygame.image.load(image_path)
+        if self.x == 750:
+            self.image = pygame.transform.scale(image, (width, height))
+            self.image = pygame.transform.flip(self.image, True, False)
+        else:
+            self.image = pygame.transform.scale(image, (width, height))
