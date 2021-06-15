@@ -1,4 +1,5 @@
 import pygame
+import os
 from gameObject import GameObject
 from player import Player
 from enemy import Enemy
@@ -68,14 +69,20 @@ class Game:
     def collided(self):
         for enemy in self.enemies:
             if self.detect_collision(self.player, enemy):
+                ouch = pygame.mixer.Sound(os.path.join('sound', 'Ouch__008.ogg'))
+                pygame.mixer.Sound.play(ouch)
                 self.level = 1.0
                 return True
         if self.detect_collision(self.player, self.treasure):
+            nice = pygame.mixer.Sound(os.path.join('sound', 'Jump__001.ogg'))
+            pygame.mixer.Sound.play(nice)
             self.level += 0.5
             return True
         return False
 
     def run_game_loop(self):
+        theme = pygame.mixer.Sound(os.path.join('sound', 'Level_1_Theme.mp3'))
+        pygame.mixer.Sound.play(theme)
         player_direction = 0
         while True:
             events = pygame.event.get()
