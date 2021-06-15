@@ -15,13 +15,29 @@ class Game:
         self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
-        self.enemies = [
-            Enemy(0, 600, 50, 50, 'assets/enemy.png', 10),
-            Enemy(750, 400, 50, 50, 'assets/enemy.png', 10),
-            Enemy(0, 200, 50, 50, 'assets/enemy.png', 10)
-        ]
 
+        self.level = 1.0
+        self.reset_level()
         self.clock = pygame.time.Clock()
+
+    def reset_level(self):
+        self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
+        speed = 5 + (self.level * 5)
+        if self.level >= 4.0:
+            self.enemies = [
+                Enemy(0, 600, 50, 50, 'assets/enemy.png', speed),
+                Enemy(750, 400, 50, 50, 'assets/enemy.png', speed),
+                Enemy(0, 200, 50, 50, 'assets/enemy.png', speed)
+            ]
+        elif self.level >= 2.0:
+            self.enemies = [
+                Enemy(0, 600, 50, 50, 'assets/enemy.png', speed),
+                Enemy(750, 400, 50, 50, 'assets/enemy.png', speed)
+            ]
+        else:
+            self.enemies = [
+                Enemy(0, 600, 50, 50, 'assets/enemy.png', speed)
+            ]
 
     def draw_objects(self):
         self.game_window.fill(self.GAME_WINDOW_BACKGROUND_COLOR)
@@ -52,8 +68,10 @@ class Game:
     def collided(self):
         for enemy in self.enemies:
             if self.detect_collision(self.player, enemy):
+                self.level = 1.0
                 return True
         if self.detect_collision(self.player, self.treasure):
+            self.level += 0.5
             return True
         return False
 
@@ -75,5 +93,5 @@ class Game:
             self.move_objects(player_direction)
             self.draw_objects()
             if self.collided():
-                return
+                self.reset_level()
             self.clock.tick(self.CLOCK_TICK)
