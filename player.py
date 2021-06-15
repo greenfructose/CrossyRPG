@@ -1,5 +1,5 @@
-import pygame
 from gameObject import GameObject
+
 
 class Player(GameObject):
 
@@ -12,5 +12,3 @@ class Player(GameObject):
             return
         else:
             self.y += (direction * self.speed)
-
-
