@@ -7,7 +7,10 @@ class Player(GameObject):
         super().__init__(x, y, width, height, image_path)
         self.speed = speed
 
-    def move(self, direction):
-        self.y += (direction * self.speed)
+    def move(self, direction, max_height):
+        if self.y >= (max_height - self.height) or self.y == 0:
+            return
+        else:
+            self.y += (direction * self.speed)
 
 

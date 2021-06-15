@@ -38,6 +38,6 @@ class Game:
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                         player_direction = 0
-            self.player.move(player_direction)
+            self.player.move(player_direction, self.SCREEN_HEIGHT)
             self.draw_objects()
             self.clock.tick(self.CLOCK_TICK)
