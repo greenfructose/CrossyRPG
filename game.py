@@ -43,6 +43,8 @@ class Game:
             self.background = GameObject(0, 0, 800, 800, 'assets/earth.png')
         if self.level == 1.5:
             self.background = GameObject(0, 0, 800, 800, 'assets/mars.png')
+        if self.level == 2.0:
+            self.background = GameObject(0, 0, 800, 800, 'assets/ceres.png')
 
     def draw_objects(self):
         self.game_window.fill(self.GAME_WINDOW_BACKGROUND_COLOR)
