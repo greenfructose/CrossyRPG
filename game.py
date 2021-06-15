@@ -12,8 +12,8 @@ class Game:
         self.SCREEN_HEIGHT = 800
         self.GAME_WINDOW_BACKGROUND_COLOR = (255, 255, 255)
         self.CLOCK_TICK = 60
-        self.background = GameObject(0, 0, 800, 800, 'assets/gif2.gif')
-        self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
+        self.background = GameObject(0, 0, 800, 800, 'assets/earth.png')
+        self.intrastellar_conduit = GameObject(350, 50, 100, 100, 'assets/intrastellar_conduit.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
 
@@ -39,13 +39,23 @@ class Game:
             self.enemies = [
                 Enemy(0, 600, 50, 50, 'assets/enemy.png', speed)
             ]
+        if self.level == 1.0:
+            self.background = GameObject(0, 0, 800, 800, 'assets/earth.png')
+        if self.level == 1.5:
+            self.background = GameObject(0, 0, 800, 800, 'assets/mars.png')
+        if self.level == 2.0:
+            self.background = GameObject(0, 0, 800, 800, 'assets/ceres.png')
 
     def draw_objects(self):
         self.game_window.fill(self.GAME_WINDOW_BACKGROUND_COLOR)
         self.game_window.blit(self.background.image, (self.background.x, self.background.y))
-        self.game_window.blit(self.treasure.image, (self.treasure.x, self.treasure.y))
+        self.game_window.blit(self.intrastellar_conduit.image, (self.intrastellar_conduit.x, self.intrastellar_conduit.y))
         self.game_window.blit(self.player.image, (self.player.x, self.player.y))
         for enemy in self.enemies:
+            if enemy.x >= self.SCREEN_WIDTH - enemy.width:
+                enemy.image = pygame.transform.flip(enemy.image, True, False)
+            elif enemy.x <= 0:
+                enemy.image = pygame.transform.flip(enemy.image, True, False)
             self.game_window.blit(enemy.image, (enemy.x, enemy.y))
         pygame.display.update()
 
@@ -73,7 +83,7 @@ class Game:
                 pygame.mixer.Sound.play(ouch)
                 self.level = 1.0
                 return True
-        if self.detect_collision(self.player, self.treasure):
+        if self.detect_collision(self.player, self.intrastellar_conduit):
             nice = pygame.mixer.Sound(os.path.join('sound', 'Jump__001.ogg'))
             pygame.mixer.Sound.play(nice)
             self.level += 0.5
