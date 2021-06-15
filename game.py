@@ -15,7 +15,12 @@ class Game:
         self.treasure = GameObject(375, 50, 50, 50, 'assets/treasure.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
-        self.enemy = Enemy(50, 600, 50, 50, 'assets/enemy.png', 10)
+        self.enemies = [
+            Enemy(0, 600, 50, 50, 'assets/enemy.png', 10),
+            Enemy(750, 400, 50, 50, 'assets/enemy.png', 10),
+            Enemy(0, 200, 50, 50, 'assets/enemy.png', 10)
+        ]
+
         self.clock = pygame.time.Clock()
 
     def draw_objects(self):
@@ -23,8 +28,14 @@ class Game:
         self.game_window.blit(self.background.image, (self.background.x, self.background.y))
         self.game_window.blit(self.treasure.image, (self.treasure.x, self.treasure.y))
         self.game_window.blit(self.player.image, (self.player.x, self.player.y))
-        self.game_window.blit(self.enemy.image, (self.enemy.x, self.enemy.y))
+        for enemy in self.enemies:
+            self.game_window.blit(enemy.image, (enemy.x, enemy.y))
         pygame.display.update()
+
+    def move_objects(self, player_direction):
+        self.player.move(player_direction, self.SCREEN_HEIGHT)
+        for enemy in self.enemies:
+            enemy.move(self.SCREEN_WIDTH)
 
     def detect_collision(self, object_1, object_2):
         if object_1.y > (object_2.y + object_2.height):
@@ -37,6 +48,14 @@ class Game:
         elif (object_1.x + object_1.width) < object_2.x:
             return False
         return True
+
+    def collided(self):
+        for enemy in self.enemies:
+            if self.detect_collision(self.player, enemy):
+                return True
+        if self.detect_collision(self.player, self.treasure):
+            return True
+        return False
 
     def run_game_loop(self):
         player_direction = 0
@@ -53,11 +72,8 @@ class Game:
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                         player_direction = 0
-            self.player.move(player_direction, self.SCREEN_HEIGHT)
-            self.enemy.move(self.SCREEN_WIDTH)
+            self.move_objects(player_direction)
             self.draw_objects()
-            if self.detect_collision(self.player, self.enemy):
-                return
-            elif self.detect_collision(self.player, self.treasure):
+            if self.collided():
                 return
             self.clock.tick(self.CLOCK_TICK)
