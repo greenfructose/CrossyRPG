@@ -12,39 +12,41 @@ class Game:
         self.SCREEN_HEIGHT = 800
         self.GAME_WINDOW_BACKGROUND_COLOR = (255, 255, 255)
         self.CLOCK_TICK = 60
-        self.background = GameObject(0, 0, 800, 800, 'assets/earth.png')
-        self.intrastellar_conduit = GameObject(350, 50, 100, 100, 'assets/intrastellar_conduit.png')
+        self.background = GameObject(0, 0, 800, 800, 'assets/Systems/Sol/earth.png')
+        self.intrastellar_conduit = GameObject(350, 50, 100, 100, 'assets/Conduits/intrastellar_conduit.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
+        self.player = Player(375, 700, 50, 50, 'assets/Ships/baseship.png', 10)
 
         self.level = 1.0
         self.reset_level()
         self.clock = pygame.time.Clock()
 
     def reset_level(self):
-        self.player = Player(375, 700, 50, 50, 'assets/player.png', 10)
+        self.player = Player(375, 700, 50, 50, 'assets/Ships/baseship.png', 10)
         speed = 5 + (self.level * 5)
         if self.level >= 4.0:
             self.enemies = [
-                Enemy(0, 600, 50, 50, 'assets/enemy.png', speed),
-                Enemy(750, 400, 50, 50, 'assets/enemy.png', speed),
-                Enemy(0, 200, 50, 50, 'assets/enemy.png', speed)
+                Enemy(0, 600, 50, 50, 'assets/Enemies/enemy.png', speed),
+                Enemy(750, 400, 50, 50, 'assets/Enemies/enemy.png', speed),
+                Enemy(0, 200, 50, 50, 'assets/Enemies/enemy.png', speed)
             ]
         elif self.level >= 2.0:
             self.enemies = [
-                Enemy(0, 600, 50, 50, 'assets/enemy.png', speed),
-                Enemy(750, 400, 50, 50, 'assets/enemy.png', speed)
+                Enemy(0, 600, 50, 50, 'assets/Enemies/enemy.png', speed),
+                Enemy(750, 400, 50, 50, 'assets/Enemies/enemy.png', speed)
             ]
         else:
             self.enemies = [
-                Enemy(0, 600, 50, 50, 'assets/enemy.png', speed)
+                Enemy(0, 600, 50, 50, 'assets/Enemies/enemy.png', speed)
             ]
         if self.level == 1.0:
-            self.background = GameObject(0, 0, 800, 800, 'assets/earth.png')
+            self.background = GameObject(0, 0, 800, 800, 'assets/Systems/Sol/earth.png')
         if self.level == 1.5:
-            self.background = GameObject(0, 0, 800, 800, 'assets/mars.png')
+            self.background = GameObject(0, 0, 800, 800, 'assets/Systems/Sol/mars.png')
         if self.level == 2.0:
-            self.background = GameObject(0, 0, 800, 800, 'assets/ceres.png')
+            self.background = GameObject(0, 0, 800, 800, 'assets/Systems/Sol/ceres.png')
+        if self.level == 2.5:
+            self.background = GameObject(0, 0, 800, 800, 'assets/Systems/Sol/europa.png')
 
     def draw_objects(self):
         self.game_window.fill(self.GAME_WINDOW_BACKGROUND_COLOR)
