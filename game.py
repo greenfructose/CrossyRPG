@@ -16,7 +16,6 @@ class Game:
         self.intrastellar_conduit = GameObject(350, 50, 100, 100, 'assets/Conduits/intrastellar_conduit.png')
         self.game_window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.player = Player(375, 700, 50, 50, 'assets/Ships/baseship.png', 10)
-
         self.level = 1.0
         self.reset_level()
         self.clock = pygame.time.Clock()
